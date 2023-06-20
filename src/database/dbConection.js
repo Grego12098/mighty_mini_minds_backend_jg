@@ -14,11 +14,11 @@ export const sequelize = new Sequelize( DB_URL,{
 });
 
 // function to create tables in db and sync them
-export async function synchronizeModels() {
-    try {
-      await sequelize.sync();
-      console.log("Tables created successfully.");
-    } catch (error) {
-      console.error("Error creating tables:", error);
-    }
-  }
+// export async function synchronizeModels() {
+//     try {
+//       await sequelize.sync();
+//       console.log("Tables created successfully.");
+//     } catch (error) {
+//       console.error("Error creating tables:", error);
+//     }
+//   }

@@ -2,10 +2,10 @@ import express from "express";
 import usersRoutes from "./routes/usersRoutes.js";
 
 
-const app = express();
+const app = express(); // create the app with express
 
-// middleware
+// middleware para que express entienda los json
 app.use(express.json());
 
-app.use(usersRoutes);
+app.use(usersRoutes); // middleware to use the routes in the app
 export default app;

@@ -2,6 +2,7 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../database/dbConection.js";
 import {entryJournal} from "./entryJournalModel.js";
 
+// set up the model with the database
 export const users = sequelize.define("users", {
     uuid:{
         type: DataTypes.UUID,
@@ -31,11 +32,13 @@ export const users = sequelize.define("users", {
     }
 });
 
+// links the user with the entryJournal via the userUuid
 users.hasMany(entryJournal,{
     foreignKey: "userUuid", 
     sourceKey: "uuid"
 });
 
+// links the entryJournal with the user via the userUuid
 entryJournal.belongsTo(users,{
     foreignKey: "userUuid",
     sourceKey: "uuid"

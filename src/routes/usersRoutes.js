@@ -12,6 +12,9 @@ import {
 const router = Router();
 
 // sets up routes for users
+router.get("/", (req, res) => {
+  res.send("Welcome to the users API");
+})
 router.get("/users/", getUsers);
 router.get("/users/:id", getUser);
 router.post("/users/", createUser);

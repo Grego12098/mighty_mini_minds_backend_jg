@@ -1,7 +1,8 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/dbConection.js";
 
-export const entryJournal = sequelize.define("entryJournal", {
+
+export const entries = sequelize.define("entries", {
     uuid:{
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV1,

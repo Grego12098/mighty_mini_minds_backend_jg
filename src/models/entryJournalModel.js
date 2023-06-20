@@ -11,13 +11,13 @@ export const entryJournal = sequelize.define("entryJournal", {
         type: DataTypes.INTEGER,
     },
     questionOne:{
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
     },
     questionTwo:{
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
     },
     questionThree:{
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
     },
     answerOne:{
         type: DataTypes.STRING(1000),

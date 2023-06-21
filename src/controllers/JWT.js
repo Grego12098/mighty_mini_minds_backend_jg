@@ -2,12 +2,12 @@ import jwt from "jsonwebtoken";
 import {sign, verify} from "jsonwebtoken";
 import{JWT_SECRET} from "../config.js";
 
-export default function createTokens(user){
+export function createTokens(user){
     const accessToken =  sign({userId: user.uuid, username: user.username, }, JWT_SECRET, {expiresIn: '1h'});
     return accessToken
 }
 
-export default function validateToken(req, res, next){
+export function validateToken(req, res, next){
     const accessToken = req.cookies["access-token"];
     if(!accessToken) return res.status(400).json({message: "User not authenticated"});
     try{

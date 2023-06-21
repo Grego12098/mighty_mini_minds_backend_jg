@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import usersRoutes from "./routes/usersRoutes.js";
 import entryRoutes from "./routes/entryJournalRoutes.js";
+import cookieParser from "cookie-parser";
 
 const app = express(); // create the app with express
 
@@ -14,6 +15,10 @@ app.use(cors({
 
 // middleware para que express entienda los json
 app.use(express.json());
+
+// middleware to parse cookies
+
+app.use(express.cookieParser());
 
 // middleware to use the routes in the app
 app.use(usersRoutes, entryRoutes);

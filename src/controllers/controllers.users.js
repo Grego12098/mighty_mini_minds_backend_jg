@@ -1,4 +1,8 @@
 import { users } from "../models/usersModel.js";
+import jwt from "jsonwebtoken";
+import{JWT_SECRET} from "../config.js";
+import bcrypt from "bcryptjs";
+import {createTokens} from "./JWT.js";
 
 // CRUD functions for users table
 export const getUsers = async (req, res) => {
@@ -36,16 +40,18 @@ export const createUser = async (req, res) => {
       contactRelationship,
       avatarUrl,
     } = req.body;
-    const newUser = await users.create({
-      name,
-      username,
-      password,
-      contactEmail,
-      contactName,
-      contactRelationship,
-      avatarUrl,
+    bcrypt.hash(password, 10, async (err, hash) => {
+        await users.create({
+        name,
+        username,
+        hash,
+        contactEmail,
+        contactName,
+        contactRelationship,
+        avatarUrl,
+      });
     });
-    res.send(newUser);
+    res.send({message: 'user created successfully'});
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -116,3 +122,28 @@ export const updateUser = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const authenticateUser = async (req, res) => {
+  try {
+    const { username, password } =req.body;
+     const user = await users.findOne({
+      where:{
+        username: username
+      }
+    });
+  if(!user){
+      return res.status(404).json({message: "User not found"});
+  }
+   const dbPassword = user.password;
+    bcrypt.compare(password, dbPassword,(err, result) => {
+      if(!result){
+        return res.status(401).json({auth: false, message: "Invalid credentials"});
+        }else{
+          const accessToken = createTokens(user);
+          res.send({auth: true, token: accessToken});
+          res.cookie("access-token", accessToken, {httpOnly: true, maxAge: 3600000})
+        }
+    })
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }};

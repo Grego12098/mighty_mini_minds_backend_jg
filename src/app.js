@@ -18,7 +18,7 @@ app.use(express.json());
 
 // middleware to parse cookies
 
-app.use(express.cookieParser());
+app.use(cookieParser());
 
 // middleware to use the routes in the app
 app.use(usersRoutes, entryRoutes);

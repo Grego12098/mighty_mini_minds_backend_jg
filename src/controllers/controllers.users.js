@@ -1,7 +1,7 @@
 import { users } from "../models/usersModel.js";
 import jwt from "jsonwebtoken";
 import{JWT_SECRET} from "../config.js";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 import {createTokens} from "./JWT.js";
 
 // CRUD functions for users table

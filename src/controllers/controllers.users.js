@@ -88,37 +88,29 @@ export const deleteUser = async (req, res) => {
 // update a user by id
 export const updateUser = async (req, res) => {
   try {
-    const { id } = req.params;
-    const {
-      name,
-      username,
-      password,
-      contactEmail,
-      contactName,
-      contactRelationship,
-      avatarUrl,
-    } = req.body;
-
     const updatedUser = await users.findOne({
       where: {
         uuid: id,
       },
     });
-
+    
     if (!updatedUser) {
       return res.status(404).json({ message: "User not found" });
     }
-
+    
+    // Hash the updated password
+    const updatedHash = await bcrypt.hash(password, 10);
+    
     await updatedUser.update({
       name,
       username,
-      password,
+      password: updatedHash, // Use the hashed password
       contactEmail,
       contactName,
       contactRelationship,
       avatarUrl,
     });
-
+    
     res.send(updatedUser);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -141,9 +133,9 @@ export const authenticateUser = async (req, res) => {
     const dbPassword = user.password;
 
     const result = await new Promise((resolve, reject) => {
-      bcrypt.compare(password, dbPassword, (err, result) => {
+      bcrypt.compare(password, dbPassword, (err, passwordMatch) => {
         if (err) reject(err);
-        resolve(result);
+        resolve(passwordMatch);
       });
     });
 

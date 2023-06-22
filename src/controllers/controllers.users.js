@@ -40,18 +40,20 @@ export const createUser = async (req, res) => {
       contactRelationship,
       avatarUrl,
     } = req.body;
-// Check if the username already exists
 
-    await users.create({
+// hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    
+
+      await users.create({
       name,
       username,
-      password,
+      password: hashedPassword,
       contactEmail,
       contactName,
       contactRelationship,
       avatarUrl,
     });
-
     res.send({ message: 'User created successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -130,13 +132,15 @@ export const authenticateUser = async (req, res) => {
     }
 
     const dbPassword = user.password;
+
+    const validPassword = await bcrypt.compare(password, dbPassword);
+    
   
-    if (dbPassword !== password) {
+    if (!validPassword) {
       return res.status(401).json({ auth: false, message: "Invalid credentials" });
     } else {
       const accessToken = createTokens(user);
-      res.send({ auth: true, token: accessToken });
-      res.cookie("access-token", accessToken, { httpOnly: true, maxAge: 3600000 });
+      res.json({ auth: true, token: accessToken });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });

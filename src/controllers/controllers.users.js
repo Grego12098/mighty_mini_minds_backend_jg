@@ -40,18 +40,20 @@ export const createUser = async (req, res) => {
       contactRelationship,
       avatarUrl,
     } = req.body;
-    bcrypt.hash(password, 10, async (err, hash) => {
-        await users.create({
-        name,
-        username,
-        hash,
-        contactEmail,
-        contactName,
-        contactRelationship,
-        avatarUrl,
-      });
+
+    const hash = await bcrypt.hash(password, 10);
+
+    await users.create({
+      name,
+      username,
+      hash,
+      contactEmail,
+      contactName,
+      contactRelationship,
+      avatarUrl,
     });
-    res.send({message: 'user created successfully'});
+
+    res.send({ message: 'User created successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

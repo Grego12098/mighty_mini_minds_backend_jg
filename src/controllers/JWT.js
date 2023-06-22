@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
-import {sign, verify} from "jsonwebtoken";
+import verify from "jsonwebtoken";
+import sign from "jsonwebtoken";
 import{JWT_SECRET} from "../config.js";
 
 export function createTokens(user){

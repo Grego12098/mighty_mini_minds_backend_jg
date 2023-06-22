@@ -40,13 +40,12 @@ export const createUser = async (req, res) => {
       contactRelationship,
       avatarUrl,
     } = req.body;
-
-    const hash = await bcrypt.hash(password, 10);
+// Check if the username already exists
 
     await users.create({
       name,
       username,
-      hash,
+      password,
       contactEmail,
       contactName,
       contactRelationship,
@@ -125,23 +124,14 @@ export const authenticateUser = async (req, res) => {
         username: username
       }
     });
-    console.log("User:", user);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
     const dbPassword = user.password;
-    console.log("DB Password:", dbPassword);
-
-    const result = await new Promise((resolve, reject) => {
-      bcrypt.compare(password, dbPassword, (err, passwordMatch) => {
-        if (err) reject(err);
-        resolve(passwordMatch);
-      });
-    });
-
-    if (!result) {
+  
+    if (dbPassword !== password) {
       return res.status(401).json({ auth: false, message: "Invalid credentials" });
     } else {
       const accessToken = createTokens(user);

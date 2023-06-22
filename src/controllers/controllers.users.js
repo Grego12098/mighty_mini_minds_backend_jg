@@ -127,20 +127,34 @@ export const updateUser = async (req, res) => {
 
 export const authenticateUser = async (req, res) => {
   try {
-    const { username, password } =req.body;
-     const user = await users.findOne({
-      where:{
-        username: username,
-        password: password
+    const { username, password } = req.body;
+    const user = await users.findOne({
+      where: {
+        username: username
       }
     });
-  if(!user){
-      return res.status(404).json({message: "User not found"});
-     }
-          const accessToken = createTokens(user);
-          res.send({auth: true, token: accessToken});
-          res.cookie("access-token", accessToken, {httpOnly: true, maxAge: 3600000})
-          res.status(200).json({message: "User authenticated"});
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const dbPassword = user.password;
+
+    const result = await new Promise((resolve, reject) => {
+      bcrypt.compare(password, dbPassword, (err, result) => {
+        if (err) reject(err);
+        resolve(result);
+      });
+    });
+
+    if (!result) {
+      return res.status(401).json({ auth: false, message: "Invalid credentials" });
+    } else {
+      const accessToken = createTokens(user);
+      res.send({ auth: true, token: accessToken });
+      res.cookie("access-token", accessToken, { httpOnly: true, maxAge: 3600000 });
+    }
   } catch (error) {
     res.status(500).json({ message: error.message });
-  }};
+  }
+};

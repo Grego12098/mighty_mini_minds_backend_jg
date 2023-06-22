@@ -125,12 +125,14 @@ export const authenticateUser = async (req, res) => {
         username: username
       }
     });
+    console.log("User:", user);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
     const dbPassword = user.password;
+    console.log("DB Password:", dbPassword);
 
     const result = await new Promise((resolve, reject) => {
       bcrypt.compare(password, dbPassword, (err, passwordMatch) => {

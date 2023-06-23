@@ -31,5 +31,8 @@ export const entries = sequelize.define("entries", {
     },
     share:{
         type: DataTypes.BOOLEAN,
+    },
+    userUuid:{
+        type: DataTypes.STRING(1000),
     }
 });

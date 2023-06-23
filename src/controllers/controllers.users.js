@@ -41,7 +41,13 @@ export const createUser = async (req, res) => {
       avatarUrl,
     } = req.body;
 
-// hash the password
+    // Check if username already exists in the database
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Username is already taken' });
+    }
+
+  // hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
     
 

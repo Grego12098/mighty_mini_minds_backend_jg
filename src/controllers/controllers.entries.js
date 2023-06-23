@@ -36,6 +36,7 @@ export const createEntry = async (req, res) => {
         answerTwo,
         answerThree,
         share,
+        userUuid,
     } = req.body;
     const newEntry = await entries.create({
         mood,
@@ -46,6 +47,7 @@ export const createEntry = async (req, res) => {
         answerTwo,
         answerThree,
         share,
+        userUuid,
     });
     res.send(newEntry);
   } catch (error) {

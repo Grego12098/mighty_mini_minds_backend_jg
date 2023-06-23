@@ -33,6 +33,6 @@ export const entries = sequelize.define("entries", {
         type: DataTypes.BOOLEAN,
     },
     userUuid:{
-        type: DataTypes.STRING(1000),
+        type: DataTypes.UUID,
     }
 });

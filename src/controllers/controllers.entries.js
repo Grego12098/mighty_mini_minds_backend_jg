@@ -1,5 +1,5 @@
 import { entries } from "../models/entryJournalModel.js";
-import {jwt} from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 import{JWT_SECRET} from "../config.js";
 
 // CRUD functions for entries table

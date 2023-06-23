@@ -1,4 +1,6 @@
 import { entries } from "../models/entryJournalModel.js";
+import {jwt} from "jsonwebtoken"
+import{JWT_SECRET} from "../config.js";
 
 // CRUD functions for entries table
 export const getEntries = async (req, res) => {
@@ -27,27 +29,29 @@ export const getEntry = async (req, res) => {
 // create a new entry (signup)
 export const createEntry = async (req, res) => {
   try {
+    const token = req.headers.authorization; // Corrected typo in the header field name
+    const decoded = jwt.verify(token, JWT_SECRET); // Use the imported JWT_SECRET instead of process.env.JWT_SECRET
+    const userUuid = decoded.userId;
     const {
-        mood,
-        questionOne,
-        questionTwo,
-        questionThree,
-        answerOne,
-        answerTwo,
-        answerThree,
-        share,
-        userUuid,
+      mood,
+      questionOne,
+      questionTwo,
+      questionThree,
+      answerOne,
+      answerTwo,
+      answerThree,
+      share,
     } = req.body;
     const newEntry = await entries.create({
-        mood,
-        questionOne,
-        questionTwo,
-        questionThree,
-        answerOne,
-        answerTwo,
-        answerThree,
-        share,
-        userUuid,
+      mood,
+      questionOne,
+      questionTwo,
+      questionThree,
+      answerOne,
+      answerTwo,
+      answerThree,
+      share,
+      userUuid,
     });
     res.send(newEntry);
   } catch (error) {

@@ -42,7 +42,7 @@ export const createUser = async (req, res) => {
     } = req.body;
 
     // Check if username already exists in the database
-    const existingUser = await User.findOne({ username });
+    const existingUser = await users.findOne({ username });
     if (existingUser) {
       return res.status(400).json({ message: 'Username is already taken' });
     }

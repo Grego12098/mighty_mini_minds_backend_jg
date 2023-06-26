@@ -32,14 +32,3 @@ export const users = sequelize.define("users", {
     }
 });
 
-// links the user with the entryJournal via the userUuid
-users.hasMany(entries,{
-    foreignKey: "user_uuid", 
-    sourceKey: "uuid"
-});
-
-// links the entryJournal with the user via the userUuid
-entries.belongsTo(users,{
-    foreignKey: "user_uuid",
-    sourceKey: "uuid"
-});

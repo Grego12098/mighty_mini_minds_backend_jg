@@ -2,7 +2,7 @@ import { users } from "../models/usersModel.js";
 import jwt from "jsonwebtoken";
 import{JWT_SECRET} from "../config.js";
 import bcrypt from "bcrypt";
-import {createTokens} from "./JWT.js";
+import {createTokens, validateToken} from "./JWT.js";
 import { entries } from "../models/entryJournalModel.js";
 
 // CRUD functions for users table
@@ -17,10 +17,11 @@ export const getUsers = async (req, res) => {
 
 // get user by id
 export const getUser = async (req, res) => {
+  console.log("Get user by id")
   try {
     const user = await users.findOne({
       where: {
-        uuid: req.params.id,
+        uuid: req.user_uuid
       },
     });
     res.send(user);
@@ -156,9 +157,10 @@ export const authenticateUser = async (req, res) => {
 
 export const getUserEntries = async (req, res) => {
   try {
+    console.log("User UUID in getUserEntries:", req.user_uuid); // Logging user_uuid
     const userEntries = await entries.findAll({
       where: {
-        user_uuid: "'" + req.user_uuid + "'",
+        user_uuid: req.user_uuid 
       },
     });
     res.send(userEntries);

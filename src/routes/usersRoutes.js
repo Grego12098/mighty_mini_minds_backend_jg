@@ -19,21 +19,20 @@ const router = Router();
 router.get("/", (req, res) => {
   res.send("Welcome to the users API");
 })
-router.get("/users/", getUsers);
-router.get("/users/:id", getUser);
+
+router.get("/users/entries",  authorizeUser, getUserEntries);
+
+router.get("/users/user", authorizeUser, getUser);
+
 router.post("/users/", createUser);
-router.delete("/users/:id", deleteUser);
-router.patch("/users/:id", updateUser);
+
+// router.patch("/users/:id", updateUser);
+
 router.post("/users/login", authenticateUser);
 
 router.post("/users/validation", validateToken, (req, res) => {
   res.send({validation: true, message: "User is authenticated"});
 })
-
-router.get("/users/entries",  authorizeUser, getUserEntries
-);
-
-
 
 
 export default router;

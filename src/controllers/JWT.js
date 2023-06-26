@@ -26,9 +26,9 @@ export function authorizeUser(req, res, next){
     try{
         const decodedToken = jwt.decode(accessToken);
         if(decodedToken){
-            console.log(decodedToken);
             req.authenticated = true;
             req.user_uuid = decodedToken.userId;
+            console.log("User UUID:", req.user_uuid); // Logging user_uuid
             return next();
         }
     }catch(error){

@@ -20,6 +20,8 @@ router.get("/", (req, res) => {
   res.send("Welcome to the users API");
 })
 
+router.get("/users", getUsers);
+
 router.get("/users/entries",  authorizeUser, getUserEntries);
 
 router.get("/users/user", authorizeUser, getUser);

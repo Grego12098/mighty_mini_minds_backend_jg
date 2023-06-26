@@ -7,12 +7,28 @@ export function createTokens(user){
 }
 
 export function validateToken(req, res, next){
-    const accessToken = req.cookies["access-token"];
+    const accessToken = req.headers["token"];
     if(!accessToken) return res.status(400).json({message: "User not authenticated"});
     try{
         const validToken = jwt.verify(accessToken, JWT_SECRET);
         if(validToken){
             req.authenticated = true;
+            return next();
+        }
+    }catch(error){
+        return res.status(400).json({ message: error});
+    }
+}
+
+export function authorizeUser(req, res, next){
+    const accessToken = req.headers["token"];
+    if(!accessToken) return res.status(400).json({message: "User not authenticated"});
+    try{
+        const decodedToken = jwt.decode(accessToken);
+        if(decodedToken){
+            console.log(decodedToken);
+            req.authenticated = true;
+            req.user_uuid = decodedToken.userId;
             return next();
         }
     }catch(error){

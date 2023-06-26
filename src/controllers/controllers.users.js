@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import{JWT_SECRET} from "../config.js";
 import bcrypt from "bcrypt";
 import {createTokens} from "./JWT.js";
+import { entries } from "../models/entryJournalModel.js";
 
 // CRUD functions for users table
 export const getUsers = async (req, res) => {
@@ -35,9 +36,9 @@ export const createUser = async (req, res) => {
       name,
       username,
       password,
-      contactEmail,
-      contactName,
-      contactRelationship,
+      contact_email,
+      contact_name,
+      contact_relationship,
       avatarUrl,
     } = req.body;
 
@@ -55,9 +56,9 @@ export const createUser = async (req, res) => {
       name,
       username,
       password: hashedPassword,
-      contactEmail,
-      contactName,
-      contactRelationship,
+      contact_email,
+      contact_name,
+      contact_relationship,
       avatarUrl,
     });
     res.send({ message: 'User created successfully' });
@@ -112,9 +113,9 @@ export const updateUser = async (req, res) => {
       name,
       username,
       password: updatedHash, // Use the hashed password
-      contactEmail,
-      contactName,
-      contactRelationship,
+      contact_email,
+      contact_name,
+      contact_relationship,
       avatarUrl,
     });
     
@@ -148,6 +149,19 @@ export const authenticateUser = async (req, res) => {
       const accessToken = createTokens(user);
       res.json({ username:user.username, token: accessToken, userId: user.uuid });
     }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getUserEntries = async (req, res) => {
+  try {
+    const userEntries = await entries.findAll({
+      where: {
+        user_uuid: "'" + req.user_uuid + "'",
+      },
+    });
+    res.send(userEntries);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

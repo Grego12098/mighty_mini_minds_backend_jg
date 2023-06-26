@@ -18,28 +18,28 @@ export const users = sequelize.define("users", {
     password:{
         type: DataTypes.STRING,
     },
-    contactEmail:{
+    contact_email:{
         type: DataTypes.STRING,
     },
-    contactName:{
+    contact_name:{
         type: DataTypes.STRING,
     },
-    contactRelationship:{
+    contact_relationship:{
         type: DataTypes.STRING,
     },
-    avatarUrl:{
+    avatar_url:{
         type: DataTypes.STRING,
     }
 });
 
 // links the user with the entryJournal via the userUuid
 users.hasMany(entries,{
-    foreignKey: "userUuid", 
+    foreignKey: "user_uuid", 
     sourceKey: "uuid"
 });
 
 // links the entryJournal with the user via the userUuid
 entries.belongsTo(users,{
-    foreignKey: "userUuid",
+    foreignKey: "user_uuid",
     sourceKey: "uuid"
 });

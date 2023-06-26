@@ -2,7 +2,7 @@ import app from "./app.js";
 import {sequelize} from "./database/dbConection.js";
 import {PORT} from "./config.js";
 // import function used on line 9  
-// import {synchronizeModels} from "./database/dbConection.js";
+//import {synchronizeModels} from "./database/dbConection.js";
 
 // runs app and syncs db
 async function main() { // async function to use await db connection and sync

@@ -27,31 +27,28 @@ export const getEntry = async (req, res) => {
 };
 
 // create a new entry (signup)
-export const createEntry = async (req, res) => {
+export const createEntry = async (req, res, user_uuid) => {
   try {
-    const token = req.headers.authorization; // Corrected typo in the header field name
-    const decoded = jwt.verify(token, JWT_SECRET); // Use the imported JWT_SECRET instead of process.env.JWT_SECRET
-    const userUuid = decoded.userId;
     const {
       mood,
-      questionOne,
-      questionTwo,
-      questionThree,
-      answerOne,
-      answerTwo,
-      answerThree,
+      question_one,
+      question_two,
+      question_three,
+      answer_one,
+      answer_two,
+      answer_three,
       share,
     } = req.body;
     const newEntry = await entries.create({
       mood,
-      questionOne,
-      questionTwo,
-      questionThree,
-      answerOne,
-      answerTwo,
-      answerThree,
+      question_one,
+      question_two,
+      question_three,
+      answer_one,
+      answer_two,
+      answer_three,
       share,
-      userUuid,
+      user_uuid,
     });
     res.send(newEntry);
   } catch (error) {
@@ -91,12 +88,12 @@ export const updateEntry = async (req, res) => {
     const { id } = req.params;
     const {
         mood,
-        questionOne,
-        questionTwo,
-        questionThree,
-        answerOne,
-        answerTwo,
-        answerThree,
+        question_one,
+        question_two,
+        question_three,
+        answer_one,
+        answer_two,
+        answer_three,
         share,
     } = req.body;
 
@@ -112,12 +109,12 @@ export const updateEntry = async (req, res) => {
 
     await updatedEntry.update({
         mood,
-        questionOne,
-        questionTwo,
-        questionThree,
-        answerOne,
-        answerTwo,
-        answerThree,
+        question_one,
+        question_two,
+        question_three,
+        answer_one,
+        answer_two,
+        answer_three,
         share,
     });
 

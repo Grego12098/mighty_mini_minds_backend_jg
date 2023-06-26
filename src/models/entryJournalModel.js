@@ -2,6 +2,7 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../database/dbConection.js";
 
 
+
 export const entries = sequelize.define("entries", {
     uuid:{
         type: DataTypes.UUID,
@@ -11,28 +12,28 @@ export const entries = sequelize.define("entries", {
     mood:{
         type: DataTypes.INTEGER,
     },
-    questionOne:{
+    question_one:{
         type: DataTypes.STRING,
     },
-    questionTwo:{
+    question_two:{
         type: DataTypes.STRING,
     },
-    questionThree:{
+    question_three:{
         type: DataTypes.STRING,
     },
-    answerOne:{
+    answer_one:{
         type: DataTypes.STRING(1000),
     },
-    answerTwo:{
+    answer_two:{
         type: DataTypes.STRING(1000),
     },
-    answerThree:{
+    answer_three:{
         type: DataTypes.STRING(1000),
     },
     share:{
         type: DataTypes.BOOLEAN,
     },
-    userUuid:{
+    user_uuid:{
         type: DataTypes.UUID,
     }
 });

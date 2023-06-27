@@ -155,16 +155,31 @@ export const authenticateUser = async (req, res) => {
   }
 };
 
+// export const getUserEntries = async (req, res) => {
+//   try {
+//     console.log("User UUID in getUserEntries:", req.user_uuid); // Logging user_uuid
+//     const userEntries = await entries.findAll({
+//       where: {
+//         user_uuid: req.user_uuid 
+//       },
+//     });
+//     res.send(userEntries);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
 export const getUserEntries = async (req, res) => {
   try {
-    console.log("User UUID in getUserEntries:", req.user_uuid); // Logging user_uuid
+    console.log("getting the entries for user:");
+    console.log(req.params.user_uuid) // Logging user_uuid
     const userEntries = await entries.findAll({
       where: {
-        user_uuid: req.user_uuid 
+        user_uuid: req.params.user_uuid,
       },
     });
     res.send(userEntries);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-};
+}

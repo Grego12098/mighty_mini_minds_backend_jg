@@ -40,7 +40,7 @@ export const createUser = async (req, res) => {
       contact_email,
       contact_name,
       contact_relationship,
-      avatarUrl,
+      avatar_url,
     } = req.body;
 
     //  Check if username already exists in the database
@@ -60,7 +60,7 @@ export const createUser = async (req, res) => {
       contact_email,
       contact_name,
       contact_relationship,
-      avatarUrl,
+      avatar_url,
     });
     res.send({ message: 'User created successfully' });
   } catch (error) {
@@ -117,7 +117,7 @@ export const updateUser = async (req, res) => {
       contact_email,
       contact_name,
       contact_relationship,
-      avatarUrl,
+      avatar_url,
     });
     
     res.send(updatedUser);

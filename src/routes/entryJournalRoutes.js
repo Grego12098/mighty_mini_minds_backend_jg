@@ -14,8 +14,8 @@ const router = Router();
 
 // sets up routes for entry
 
-router.post("/entry/", authorizeUser,(req, res) => {
-  createEntry(req, res, req.user_uuid)
+router.post("/entry/",(req, res) => {
+  createEntry(req, res,)
 });
 
 router.delete("/entry/:id", deleteEntry);

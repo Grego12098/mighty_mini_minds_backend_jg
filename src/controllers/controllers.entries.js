@@ -27,7 +27,7 @@ export const getEntry = async (req, res) => {
 };
 
 // create a new entry (signup)
-export const createEntry = async (req, res, user_uuid) => {
+export const createEntry = async (req, res) => {
   try {
     const {
       mood,
@@ -38,6 +38,7 @@ export const createEntry = async (req, res, user_uuid) => {
       answer_two,
       answer_three,
       share,
+      user_uuid,
     } = req.body;
     const newEntry = await entries.create({
       mood,

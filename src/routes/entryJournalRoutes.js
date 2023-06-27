@@ -18,7 +18,7 @@ router.post("/entry/", authorizeUser,(req, res) => {
   createEntry(req, res, req.user_uuid)
 });
 
-// router.delete("/entry/:id", deleteEntry);
-// router.patch("/entry/:id", updateEntry);
+router.delete("/entry/:id", deleteEntry);
+router.patch("/entry/:id", updateEntry);
 
 export default router;

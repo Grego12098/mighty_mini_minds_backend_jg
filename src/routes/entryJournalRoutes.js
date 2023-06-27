@@ -14,6 +14,8 @@ const router = Router();
 
 // sets up routes for entry
 
+router.get("/entry", getEntries);
+
 router.post("/entry/",(req, res) => {
   createEntry(req, res,)
 });

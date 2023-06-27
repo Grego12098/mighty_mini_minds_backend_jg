@@ -14,13 +14,11 @@ const router = Router();
 
 // sets up routes for entry
 
-router.get("/entry", getEntries);
+router.get("/entries", getEntries);
 
-router.post("/entry/",(req, res) => {
-  createEntry(req, res,)
-});
+router.post("/entries/:user_uuid",createEntry);
 
-router.delete("/entry/:id", deleteEntry);
-router.patch("/entry/:id", updateEntry);
+router.delete("/entries/:id", deleteEntry);
+router.patch("/entries/:id", updateEntry);
 
 export default router;

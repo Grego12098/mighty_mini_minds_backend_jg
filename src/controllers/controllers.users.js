@@ -21,7 +21,7 @@ export const getUser = async (req, res) => {
   try {
     const user = await users.findOne({
       where: {
-        uuid: req.user_uuid
+        uuid: req.params.user_uuid
       },
     });
     res.send(user);

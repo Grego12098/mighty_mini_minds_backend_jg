@@ -26,7 +26,7 @@ router.get("/users", getUsers);
 
 //router.get("/users/entries",  authorizeUser, getUserEntries);
 
-router.get("/users/user", authorizeUser, getUser);
+router.get("/users/:user_uuid", getUser);
 
 router.post("/users/", createUser);
 

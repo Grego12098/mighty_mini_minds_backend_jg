@@ -30,7 +30,7 @@ router.get("/users/:user_uuid", getUser);
 
 router.post("/users/", createUser);
 
-router.patch("/users/:user_uuid", updateUser);
+router.patch("/users/:uuid", updateUser);
 
 // router.patch("/users/:id", updateUser);
 

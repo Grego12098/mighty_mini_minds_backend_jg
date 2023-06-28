@@ -96,10 +96,21 @@ export const deleteUser = async (req, res) => {
 
 // update a user by id
 export const updateUser = async (req, res) => {
+  const { uuid } = req.params;
+  const {
+    name,
+    username,
+    password, // Use the hashed password
+    contact_email,
+    contact_name,
+    contact_relationship,
+    avatar_url,
+  } = req.body; 
+  
   try {
     const updatedUser = await users.findOne({
       where: {
-        uuid: id,
+        uuid: uuid,
       },
     });
     

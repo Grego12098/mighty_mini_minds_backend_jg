@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 
 export const sendEmail = async (req, res) => {
     const { entry_id } = req.params;
-
+try{
     const entry = await entries.findOne({
         where: {
             uuid: entry_id,
@@ -53,6 +53,10 @@ export const sendEmail = async (req, res) => {
             }
             console.log("you sent an email!")
         })
+        res.send("email sent!")
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 
 }
 

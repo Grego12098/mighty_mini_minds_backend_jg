@@ -12,6 +12,7 @@ import {
 } from "../controllers/controllers.users.js";
 // import validation token middleware
 import{validateToken, authorizeUser} from "../controllers/JWT.js";
+import { sendBadWeekEmail } from "../controllers/controllers.email.js";
 
 const router = Router();
 
@@ -19,6 +20,8 @@ const router = Router();
 router.get("/", (req, res) => {
   res.send("Welcome to the users API");
 })
+
+router.post("/sendbademail/:user_uuid", sendBadWeekEmail)
 
 router.get("/entries/:user_uuid", getUserEntries);
 

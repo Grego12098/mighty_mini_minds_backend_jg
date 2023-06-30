@@ -53,11 +53,36 @@ try{
             }
             console.log("you sent an email!")
         })
-        res.send("email sent!")
+        
+    res.send("email sent!")
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 
 }
 
+export const sendBadWeekEmail = async(req, res) => {
+    const {user_uuid} = req.params;
+    const { username, contact_email } = await users.findOne({
+        where: {
+            uuid: user_uuid,
+        }
+    })
+    const options = {
+        from: "mightyminiminds@outlook.com",
+        to: contact_email,
+        subject: `I think ${username} is not having the best week`,
+        text: 
+        `${username}'s mood has not been great this week
+        and they have decided to let you know.
+        It would be great if you can check on ${username}` 
+        }
+    transporter.sendMail(options, (err, info) => {
+        if(err) {
+            console.log(err);
+        }
+        console.log("you sent an email!")
+    })
+    res.send("email sent!")
 
+    }

@@ -18,7 +18,7 @@ const router = Router();
 router.get("/entries", getEntries);
 
 router.post("/entries/:user_uuid",createEntry);
-router.post("/sendemail/", sendEmail);
+router.post("/sendemail/:entry_id", sendEmail);
 
 router.delete("/entries/:id", deleteEntry);
 router.patch("/entries/:id", updateEntry);

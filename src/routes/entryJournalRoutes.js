@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { authorizeUser } from "../controllers/JWT.js";
+import {sendEmail} from "../controllers/controllers.email.js";
 
 // import functions
 import {
@@ -17,6 +18,7 @@ const router = Router();
 router.get("/entries", getEntries);
 
 router.post("/entries/:user_uuid",createEntry);
+router.post("/sendemail/", sendEmail);
 
 router.delete("/entries/:id", deleteEntry);
 router.patch("/entries/:id", updateEntry);

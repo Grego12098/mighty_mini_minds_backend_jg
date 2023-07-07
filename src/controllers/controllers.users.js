@@ -124,12 +124,15 @@ export const updateUser = async (req, res) => {
     }
     
     // Hash the updated password
-    const updatedHash = await bcrypt.hash(password, 10);
+    if (password) {
+      const updatedHash = await bcrypt.hash(password, 10);
+      updatedUser.password = updatedHash;
+    }
     
     await updatedUser.update({
       name,
       username,
-      password: updatedHash, // Use the hashed password
+      password: updatedUser.password, // Use the hashed password
       contact_email,
       contact_name,
       contact_relationship,

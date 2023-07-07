@@ -27,7 +27,7 @@ import app from "../app.js"
 chai.use(chaiHttp);
 chai.should();
 describe("Users", () => {
-    describe("GET /", () => {
+    describe("GET", () => {
         // Test to get all users
         it("should get all users", (done) => {
              chai.request(app)
@@ -60,5 +60,26 @@ describe("Users", () => {
                      done();
                   });
          });
+    });
+    describe("POST", () => {
+            // Test to post new user
+            it("should create a new user", (done) => {
+                chai.request(app)
+                    .post('/users')
+                    .send({
+                        name: "John Doe",
+                        username: "johndoe",
+                        password: "password123",
+                        contact_email: "john.doe@example.com",
+                        contact_name: "Jane Doe",
+                        contact_relationship: "Friend",
+                        avatar_url: "https://example.com/avatar.jpg"
+                      })
+                    .end((err, res) => {
+                        res.should.have.status(200);
+                        res.body.should.be.a('object');
+                         done();
+                    });
+            });
     });
 });

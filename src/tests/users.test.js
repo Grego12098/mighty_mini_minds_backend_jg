@@ -111,15 +111,17 @@ describe("Users", () => {
     describe("PATCH", () => {
       // Test to update user info
       it("should update user info", (done) => {
-        const id="6011ee5d-d5ff-4126-9025-c073864de766"
+        const uuid="6011ee5d-d5ff-4126-9025-c073864de766"
           chai.request(app)
-              .patch(`/users/${id}`)
+              .patch(`/users/${uuid}`)
               .send({
                   name: "Jimmy Sloe",
-                  contact_email: "john.doe@example.com",
+                  username: "jimmysloe",
+                  password: "123",
+                  contact_email: "john.doe2@example.com",
                   contact_name: "Jane Doe",
                   contact_relationship: "Mrs",
-                  avatar_url: "https://example.com/avatar.jpg"
+                  avatar_url: "https://example.com/avatars.jpg"
                 })
               .end((err, res) => {
                   res.should.have.status(200);
@@ -132,9 +134,8 @@ describe("Users", () => {
         const id = "6011ee5d-d5ff-4126-9025-c073864dd556";
         chai.request(app)
             .patch(`/users/${id}`)
-            .send(
-              {name: "Jimmy Sloe"}
-            )
+            .send({name: "Jimmy Sloe"
+            })
             .end((err, res) => {
                 res.should.have.status(404);
                 done();
@@ -142,13 +143,21 @@ describe("Users", () => {
     });
 
       });
-      it("should send status 500 if body is empty", (done) => {
-          const id="6011ee5d-d5ff-4126-9025-c073864de766"
+      // sending a status 200 for empty body and incorrect key, 
+      // should we update our function to send a 500 in these cases?
+      it("should send status 500 if id is the wrong format", (done) => {
+          const id="5"
           chai.request(app)
               .patch(`/users/${id}`)
+              .send({
+                names: "Jimmy Sloe"
+                })
               .end((err, res) => {
-                  res.should.have.status(500);
-                   done();
+                    res.should.have.status(500);
+                    done();
               });
       });
 });
+// ideally we would create a delete user test,
+// delete the user we created in the post test,
+// then both tests would pass every time

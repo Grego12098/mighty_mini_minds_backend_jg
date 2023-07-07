@@ -68,6 +68,7 @@ describe("Users", () => {
                     .post('/users')
                     .send({
                         name: "John Doe",
+                        // must input unique username or will get error status 400
                         username: "johndoe",
                         password: "password123",
                         contact_email: "john.doe@example.com",
@@ -78,6 +79,31 @@ describe("Users", () => {
                     .end((err, res) => {
                         res.should.have.status(200);
                         res.body.should.be.a('object');
+                         done();
+                    });
+            });
+            it("should ensure a new user has a unique username", (done) => {
+                chai.request(app)
+                    .post('/users')
+                    .send({
+                        name: "John Doe",
+                        username: "johndoe",
+                        password: "password123",
+                        contact_email: "john.doe@example.com",
+                        contact_name: "Jane Doe",
+                        contact_relationship: "Friend",
+                        avatar_url: "https://example.com/avatar.jpg"
+                      })
+                    .end((err, res) => {
+                        res.should.have.status(400);
+                        done();
+                    });
+            });
+            it("should send status 500 if body is empty", (done) => {
+                chai.request(app)
+                    .post('/users')
+                    .end((err, res) => {
+                        res.should.have.status(500);
                          done();
                     });
             });

@@ -108,4 +108,47 @@ describe("Users", () => {
                     });
             });
     });
+    describe("PATCH", () => {
+      // Test to update user info
+      it("should update user info", (done) => {
+        const id="6011ee5d-d5ff-4126-9025-c073864de766"
+          chai.request(app)
+              .patch(`/users/${id}`)
+              .send({
+                  name: "Jimmy Sloe",
+                  contact_email: "john.doe@example.com",
+                  contact_name: "Jane Doe",
+                  contact_relationship: "Mrs",
+                  avatar_url: "https://example.com/avatar.jpg"
+                })
+              .end((err, res) => {
+                  res.should.have.status(200);
+                  res.body.should.be.a('object');
+                   done();
+              });
+      });
+      
+      it("If id is wrong, send error code", (done) => {
+        const id = "6011ee5d-d5ff-4126-9025-c073864dd556";
+        chai.request(app)
+            .patch(`/users/${id}`)
+            .send(
+              {name: "Jimmy Sloe"}
+            )
+            .end((err, res) => {
+                res.should.have.status(404);
+                done();
+             });
+    });
+
+      });
+      it("should send status 500 if body is empty", (done) => {
+          const id="6011ee5d-d5ff-4126-9025-c073864de766"
+          chai.request(app)
+              .patch(`/users/${id}`)
+              .end((err, res) => {
+                  res.should.have.status(500);
+                   done();
+              });
+      });
 });

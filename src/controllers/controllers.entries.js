@@ -2,7 +2,6 @@ import { entries } from "../models/entryJournalModel.js";
 import jwt from "jsonwebtoken";
 import{JWT_SECRET} from "../config.js";
 
-// CRUD functions for entries table
 export const getEntries = async (req, res) => {
   try {
     const listEntries = await entries.findAll();
@@ -12,7 +11,6 @@ export const getEntries = async (req, res) => {
   }
 };
 
-// get entry by id
 export const getEntry = async (req, res) => {
   try {
     const entry = await entries.findOne({
@@ -26,7 +24,6 @@ export const getEntry = async (req, res) => {
   }
 };
 
-// create a new entry (signup)
 export const createEntry = async (req, res) => {
   try {
     const {user_uuid} = req.params;
@@ -57,7 +54,6 @@ export const createEntry = async (req, res) => {
   }
 };
 
-// delete a entry by id
 export const deleteEntry = async (req, res) => {
   try {
     const { id } = req.params;
@@ -83,7 +79,6 @@ export const deleteEntry = async (req, res) => {
   }
 };
 
-// update a entry by id
 export const updateEntry = async (req, res) => {
   try {
     const { id } = req.params;

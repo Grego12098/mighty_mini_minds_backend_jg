@@ -1,21 +1,20 @@
 import app from "./app.js";
 import {sequelize} from "./database/dbConection.js";
 import {PORT} from "./config.js";
-// import function used on line 9  
+// for syncing models
 //import {synchronizeModels} from "./database/dbConection.js";
 
-// runs app and syncs db
-async function main() { // async function to use await db connection and sync
+
+async function main() { 
     try {
         await sequelize.sync({force: false});
          // create table and sync with db 
         // await synchronizeModels();
         console.log("Database connected");
-        app.listen(PORT); // listen to the app on port 3000
-        console.log(`example app listening at ${PORT}`) // log to console
+        app.listen(PORT); 
+        console.log(`example app listening at ${PORT}`) 
     } catch (error) {
         console.log(error);
-        
     }
 }
 

@@ -5,7 +5,6 @@ import bcrypt from "bcrypt";
 import {createTokens, validateToken} from "./JWT.js";
 import { entries } from "../models/entryJournalModel.js";
 
-// CRUD functions for users table
 export const getUsers = async (req, res) => {
   try {
     const listUsers = await users.findAll();
@@ -15,7 +14,6 @@ export const getUsers = async (req, res) => {
   }
 };
 
-// get user by id
 export const getUser = async (req, res) => {
   console.log("Get user by id")
   try {
@@ -30,7 +28,6 @@ export const getUser = async (req, res) => {
   }
 };
 
-// create a new user (signup)
 export const createUser = async (req, res) => {
   try {
     const {
@@ -43,7 +40,6 @@ export const createUser = async (req, res) => {
       avatar_url,
     } = req.body;
 
-    //  Check if username already exists in the database
       const existingUser = await users.findOne({ 
       where: {
         username : req.body.username 
@@ -54,10 +50,8 @@ export const createUser = async (req, res) => {
        return res.status(400).json({ message: 'Username is already taken' });
     }
 
-  // hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
     
-
       await users.create({
       name,
       username,
@@ -73,7 +67,6 @@ export const createUser = async (req, res) => {
   }
 };
 
-// delete a user by id
 export const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
@@ -99,13 +92,12 @@ export const deleteUser = async (req, res) => {
   }
 };
 
-// update a user by id
 export const updateUser = async (req, res) => {
   const { uuid } = req.params;
   const {
     name,
     username,
-    password, // Use the hashed password
+    password, 
     contact_email,
     contact_name,
     contact_relationship,
@@ -123,7 +115,6 @@ export const updateUser = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
     
-    // Hash the updated password
     if (password) {
       const updatedHash = await bcrypt.hash(password, 10);
       updatedUser.password = updatedHash;
@@ -132,7 +123,7 @@ export const updateUser = async (req, res) => {
     await updatedUser.update({
       name,
       username,
-      password: updatedUser.password, // Use the hashed password
+      password: updatedUser.password, 
       contact_email,
       contact_name,
       contact_relationship,
@@ -174,24 +165,10 @@ export const authenticateUser = async (req, res) => {
   }
 };
 
-// export const getUserEntries = async (req, res) => {
-//   try {
-//     console.log("User UUID in getUserEntries:", req.user_uuid); // Logging user_uuid
-//     const userEntries = await entries.findAll({
-//       where: {
-//         user_uuid: req.user_uuid 
-//       },
-//     });
-//     res.send(userEntries);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
-
 export const getUserEntries = async (req, res) => {
   try {
     console.log("getting the entries for user:");
-    console.log(req.params.user_uuid) // Logging user_uuid
+    console.log(req.params.user_uuid) 
     const userEntries = await entries.findAll({
       where: {
         user_uuid: req.params.user_uuid,

@@ -2,7 +2,6 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../database/dbConection.js";
 import {entries} from "./entryJournalModel.js";
 
-// set up the model with the database
 export const users = sequelize.define("users", {
     uuid:{
         type: DataTypes.UUID,

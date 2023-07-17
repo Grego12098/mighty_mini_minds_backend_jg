@@ -1,7 +1,6 @@
 import  Sequelize  from "sequelize";
 import {DB_URL} from "../config.js";
 
-// create a new sequelize instance with the db url
 export const sequelize = new Sequelize( DB_URL,{
     dialect: "postgres",
     protocol: "postgres",

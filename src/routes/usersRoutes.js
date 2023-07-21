@@ -30,8 +30,10 @@ router.post("/users/", createUser);
 
 router.patch("/users/:uuid", updateUser);
 
+router.delete("/users/:uuid", deleteUser);
 
-router.post("/users/login", authenticateUser);
+
+router.post("/login", authenticateUser);
 
 router.post("/users/validation", validateToken, (req, res) => {
   res.send({validation: true, message: "User is authenticated"});

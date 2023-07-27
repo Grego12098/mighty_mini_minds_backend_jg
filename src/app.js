@@ -7,7 +7,7 @@ const app = express();
 
 // Enable Cors middleware for frontend access
 app.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:4173/', 'https://migthyminiminds.netlify.app/'],
+    origin: ['http://localhost:5173', 'http://localhost:4173/', 'https://migthyminiminds.netlify.app'],
     methods: ['GET', 'POST', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization','token'],
   }));

@@ -9,6 +9,11 @@ export const sequelize = new Sequelize( DB_URL,{
             require: true,
             rejectUnauthorized: false,
         }
+    },
+    define: {
+        underscored: true,
+        createdAt: 'created_at',
+        updatedAt: 'updated_at',
     }
 });
 

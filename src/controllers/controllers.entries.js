@@ -1,7 +1,5 @@
 import { entries } from "../models/entryJournalModel.js";
-import jwt from "jsonwebtoken";
-import{JWT_SECRET} from "../config.js";
-
+import { users } from "../models/usersModel.js";
 export const getEntries = async (req, res) => {
   try {
     const listEntries = await entries.findAll();
@@ -11,14 +9,23 @@ export const getEntries = async (req, res) => {
   }
 };
 
-export const getEntry = async (req, res) => {
+export const getUserEntries = async (req, res) => {
   try {
-    const entry = await entries.findOne({
+    const user = await users.findOne({
       where: {
-        uuid: req.params.id,
+        uuid: req.params.user_uuid,
+      },
+      include: {
+        model: entries,
       },
     });
-    res.send(entry);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const userEntries = user.entries; 
+    res.send(userEntries);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

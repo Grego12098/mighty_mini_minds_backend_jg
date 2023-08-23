@@ -1,10 +1,9 @@
 import { Router } from "express";
-import { authorizeUser } from "../controllers/JWT.js";
 import {sendEmail} from "../controllers/controllers.email.js";
 
 import {
   getEntries,
-  getEntry,
+  getUserEntries,
   createEntry,
   deleteEntry,
   updateEntry,
@@ -13,11 +12,12 @@ import {
 const router = Router();
 
 router.get("/entries", getEntries);
+router.get("/entries/:user_uuid", getUserEntries);
 
 router.post("/entries/:user_uuid",createEntry);
-router.post("/sendemail/:entry_id", sendEmail);
+router.post("/sendemail/:entry_uuid", sendEmail);
 
-router.delete("/entries/:id", deleteEntry);
-router.patch("/entries/:id", updateEntry);
+router.delete("/entries/:entry_uuid", deleteEntry);
+router.patch("/entries/:entry_uuid", updateEntry);
 
 export default router;

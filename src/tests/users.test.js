@@ -4,8 +4,6 @@ import {
   createUser,
   deleteUser,
   updateUser,
-  authenticateUser,
-  getUserEntries
 } from "../controllers/controllers.users.js";
 
 import { users } from "../models/usersModel.js";

@@ -37,3 +37,5 @@ export const users = sequelize.define("users", {
     }
 });
 
+users.hasMany(entries, { foreignKey: 'user_uuid' });
+entries.belongsTo(users, { foreignKey: 'user_uuid' });
